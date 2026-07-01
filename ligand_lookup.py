@@ -3,7 +3,7 @@ import os
 from typing import Optional
 
 #load JSON once at start
-_DATA_PATH = os.path.join(os.path.dirname(__file__), "wikidata_smiles.json")
+_DATA_PATH = os.path.join(os.path.dirname(__file__), "ligand_list.json")
 
 def _load():
     with open(_DATA_PATH) as f:
