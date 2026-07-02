@@ -7,11 +7,10 @@ _DATA_PATH = os.path.join(os.path.dirname(__file__), "ligand_list.json")
 def _load():
     with open(_DATA_PATH) as f:
         data = json.load(f)
-    return {
-        entry["name"].lower(): entry["smiles"]
-        for entry in data
-        if entry.get("name") and entry.get("smiles") and len(entry.get("smiles", "")) > 3
-    }
+    # Support both flat dict {name: smiles} and list of {name, smiles} dicts
+    if isinstance(data, dict):
+        return {k.lower(): v for k, v in data.items()}
+    return {entry["name"].lower(): entry["smiles"] for entry in data if entry.get("name") and entry.get("smiles")}
 
 _LOOKUP = _load()
 
@@ -38,16 +37,17 @@ def search(query: str) -> list:
     Examples
     --------
     >>> search("phos")
-    [{'name': 'XPhos', 'smiles': '...'}, {'name': 'SPhos', 'smiles': '...'}, ...]
+    [{'name': 'XPhos', 'smiles': '...'}, ...]
     """
     query = query.strip().lower()
     with open(_DATA_PATH) as f:
         data = json.load(f)
+    if isinstance(data, dict):
+        return [{"name": k, "smiles": v} for k, v in data.items() if query in k.lower()]
     return [
-        {"name": entry["name"], "smiles": entry["smiles"]}
-        for entry in data
-        if entry.get("name") and entry.get("smiles")
-        and query in entry["name"].lower()
+        {"name": e["name"], "smiles": e["smiles"]}
+        for e in data
+        if e.get("name") and e.get("smiles") and query in e["name"].lower()
     ]
 
 
@@ -62,4 +62,6 @@ def available_names() -> list:
     """
     with open(_DATA_PATH) as f:
         data = json.load(f)
-    return sorted(entry["name"] for entry in data if entry.get("name"))
+    if isinstance(data, dict):
+        return sorted(data.keys())
+    return sorted(e["name"] for e in data if e.get("name"))
