@@ -19,7 +19,7 @@ No dependencies beyond the Python standard library. The lookup database is inclu
 ### Exact name lookup
 
 ```python
-from ligand_lookup import name_to_smiles
+from Ligand2SMILES import name_to_smiles
 
 smiles = name_to_smiles("XPhos")
 # 'CC(C)C1=CC(=C(C(=C1)C(C)C)...'
@@ -34,7 +34,7 @@ smiles = name_to_smiles("unknown")
 ### Partial name search
 
 ```python
-from ligand_lookup import search
+from Ligand2SMILES import search
 
 results = search("phos")
 # [{'name': 'XPhos', 'smiles': '...'}, {'name': 'SPhos', 'smiles': '...'}, ...]
@@ -43,7 +43,7 @@ results = search("phos")
 ### List all available names
 
 ```python
-from ligand_lookup import available_names
+from Ligand2SMILES import available_names
 
 names = available_names()
 # ['1,10-phenanthroline', 'BINAP', 'BrettPhos', 'XPhos', ...]
@@ -51,7 +51,7 @@ names = available_names()
 
 ## Coverage
 
-~5400+ compounds including:
+~12000+ compounds including:
 - Buchwald monophosphines (XPhos, SPhos, RuPhos, BrettPhos, DavePhos, JohnPhos, ...)
 - Bisphosphines (BINAP, DPPF, dppe, Xantphos, SEGPHOS, ...)
 - NHC ligands (IMes, IPr, SIMes, SIPr, ...)
