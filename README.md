@@ -14,6 +14,9 @@ pip install .
 
 No dependencies beyond the Python standard library. The lookup database is included, no setup or any scraping is required.
 
+All entries are validated through RDKit and cross-checked against source molecular weights (entries with a discrepancy of ≥1 Da were removed) before inclusion in the database.
+
+
 ## Usage
 
 ### Exact name lookup
